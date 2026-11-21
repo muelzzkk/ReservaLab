@@ -2,12 +2,14 @@
 
 O **Reserva Lab** é uma aplicação web para agendar salas e laboratórios. Com uma conta, você pode escolher um espaço, marcar uma data e um horário de início e acompanhar seus agendamentos em **Minhas reservas**.
 
+[Acessar o Reserva Lab na Vercel](https://reserva-lab-chi.vercel.app/)
+
 ## Funcionalidades
 
-- Cadastro e login por e-mail, com opção de mostrar ou ocultar a senha.
-- Criação, edição e exclusão de reservas para três salas e três laboratórios. A exclusão exige confirmação e as ações exibem avisos de sucesso ou erro.
-- Calendário para escolher a data e filtro por espaço na lista de reservas.
-- Interface responsiva com temas claro e escuro e suporte à preferência por movimento reduzido.
+- Cadastro e login por e-mail, com opção de mostrar ou ocultar a senha. O cabeçalho indica se há uma sessão ativa e oferece a opção de sair.
+- Criação, edição e exclusão de reservas nos espaços numerados de 1 a 3 para cada categoria, salas e laboratórios.
+- Calendário do HeroUI para escolher a data, filtro por espaço, confirmação de exclusão com o nome da reserva e toasts de sucesso ou erro.
+- Formulários de login e cadastro em duas colunas no desktop e uma no celular, com temas claro e escuro e suporte à preferência por movimento reduzido.
 
 Cada conta só pode consultar e alterar as próprias reservas. Uma nova reserva precisa ter data igual ou posterior a hoje, no fuso de São Paulo. O mesmo espaço aceita apenas uma reserva por combinação de data e horário de início.
 
@@ -60,6 +62,18 @@ Para validar o código, execute `npm.cmd run lint` e `npm.cmd run build` dentro 
 ## Vercel
 
 Importe o repositório na Vercel, selecione `frontend` como **Root Directory** e use o preset **Next.js**. Configure `MONGODB_URI` e `NEXTAUTH_SECRET` como variáveis sensíveis e defina `NEXTAUTH_URL` com o endereço HTTPS da aplicação. Confirme que o Atlas permite conexões vindas do ambiente de deploy.
+
+Configure as variáveis no ambiente **Production**. Se alterar uma variável, faça um novo deploy para aplicar a mudança. Se o cadastro carregar, mas a operação atingir o tempo limite, verifique se o cluster está ativo e se a lista de acesso do Atlas permite a conexão da Vercel.
+
+## Convenção de commits
+
+Use o formato `tipo(escopo): descrição`, com uma descrição curta em português que diga o que mudou. Use `feat` para funcionalidades, `fix` para correções e `docs` para documentação.
+
+```text
+feat(reservas): adiciona filtro por espaço
+fix(auth): oculta o link da tela atual na navbar
+docs(readme): documenta a versão final do Reserva Lab
+```
 
 ## Roteiro de demonstração
 
