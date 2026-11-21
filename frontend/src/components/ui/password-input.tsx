@@ -10,6 +10,7 @@ export function PasswordInput({ registration = false }: { registration?: boolean
   return (
     <Input
       label="Senha"
+      labelPlacement="outside-top"
       name="password"
       type={visible ? "text" : "password"}
       autoComplete={registration ? "new-password" : "current-password"}

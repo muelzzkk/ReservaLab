@@ -46,11 +46,11 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={login} className="space-y-4">
-      <Input label="E-mail" name="email" type="email" autoComplete="username" isRequired maxLength={254} />
+    <form onSubmit={login} className="flex flex-col gap-5 md:gap-6">
+      <Input label="E-mail" labelPlacement="outside-top" name="email" type="email" autoComplete="username" isRequired maxLength={254} />
       <PasswordInput />
       {error && <p className="form-error">{error}</p>}
-      <Button type="submit" isDisabled={pending} fullWidth>{pending ? "Entrando…" : "Entrar"}</Button>
+      <Button type="submit" className="md:min-h-12" isDisabled={pending} fullWidth>{pending ? "Entrando…" : "Entrar"}</Button>
     </form>
   );
 }
