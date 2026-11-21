@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AuthNavLinks } from "@/components/auth-nav-links";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { LogoutButton } from "@/components/logout-button";
-import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/auth";
 import { initializeTheme } from "@/lib/theme";
 import { Providers } from "./providers";
@@ -38,14 +38,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                   <span className="muted rounded-full border border-[var(--line)] px-2.5 py-1 text-xs">Não logado</span>
                 )}
               </div>
-              <div className={`col-span-2 row-start-3 items-center justify-end gap-2 min-[460px]:col-span-1 min-[460px]:col-start-2 min-[460px]:row-start-2 sm:col-start-4 sm:row-start-1 ${user ? "flex" : "grid grid-cols-3 min-[460px]:flex"}`}>
+              <div className={`col-span-2 row-start-3 items-center justify-end gap-2 min-[460px]:col-span-1 min-[460px]:col-start-2 min-[460px]:row-start-2 sm:col-start-4 sm:row-start-1 ${user ? "flex" : "grid auto-cols-fr grid-flow-col min-[460px]:flex"}`}>
                 <ThemeSwitch />
-                {user ? <LogoutButton /> : (
-                  <>
-                    <Button variant="secondary" href="/login" className="px-2.5 sm:px-4">Entrar</Button>
-                    <Button href="/cadastro" className="px-2.5 sm:px-4">Criar conta</Button>
-                  </>
-                )}
+                {user ? <LogoutButton /> : <AuthNavLinks />}
               </div>
             </nav>
           </header>
