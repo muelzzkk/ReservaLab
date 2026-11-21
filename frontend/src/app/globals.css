@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@plugin "./hero.mjs";
+@source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: light;
+  --canvas: #eff3f7;
+  --surface: #fff;
+  --field: #f7f9fc;
+  --text: #14243a;
+  --muted: #4c6077;
+  --line: #ced9e5;
+  --accent: #005e60;
+  --primary: #09696a;
+  --primary-hover: #005657;
+  --on-primary: #fff;
+  --tint: #def3ee;
+  --danger: #a62d36;
+  --danger-tint: #fde9ea;
+  --shadow: 0 16px 45px #1c3b5a12;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #0c1523;
+  --surface: #142135;
+  --field: #0e1a2c;
+  --text: #edf5ff;
+  --muted: #b3c4d8;
+  --line: #344862;
+  --accent: #8aeddb;
+  --primary: #86ead7;
+  --primary-hover: #aff7e9;
+  --on-primary: #10332e;
+  --tint: #1b3c3d;
+  --danger: #ffb2b9;
+  --danger-tint: #462733;
+  --shadow: 0 16px 45px #0003;
+}
+
+@layer base {
+  body {
+    min-height: 100vh;
+    background: var(--canvas);
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, sans-serif;
+  }
+  a, button, input, select { outline-offset: 4px; }
+  :focus-visible { outline: 2px solid var(--accent); }
+  button:not(:disabled) { cursor: pointer; }
+}
+
+@layer components {
+  .site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .muted { color: var(--muted); }
+  .text-link { color: var(--accent); font-weight: 650; }
+  .text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .panel { @apply rounded-2xl border p-5 sm:p-8; background: var(--surface); border-color: var(--line); box-shadow: var(--shadow); }
+  .page-title { @apply text-3xl font-bold tracking-tight sm:text-4xl; }
+  .form-error { @apply rounded-xl px-4 py-3 text-sm; color: var(--danger); background: var(--danger-tint); }
+  .hero {
+    color: #f2f8ff;
+    background: radial-gradient(ellipse at top right, #216f78 0%, transparent 58%), linear-gradient(135deg, #12233e, #122e46);
+    box-shadow: var(--shadow);
+  }
+  .hero :focus-visible { outline-color: #a0f1df; }
+
+  .theme-icons > span { grid-area: 1 / 1; }
+  .theme-moon, :root[data-theme="dark"] .theme-sun { opacity: 0; }
+  :root[data-theme="dark"] .theme-moon { opacity: 1; }
+}
+
+.app-button.button-primary { background: var(--primary); color: var(--on-primary); border-color: transparent; }
+.app-button.button-primary:hover { background: var(--primary-hover); }
+.app-button.button-secondary { color: var(--text); background: var(--surface); border-color: var(--line); }
+.app-button.button-secondary:hover { background: var(--field); }
+.app-button.button-danger { color: var(--danger); background: var(--danger-tint); border-color: transparent; }
+.app-button.button-danger:hover { border-color: var(--danger); }
+.hero .app-button.button-primary { background: #a0f1df; color: #10332e; }
+.hero .app-button.button-primary:hover { background: #c5faef; }
+.hero .app-button.button-secondary { background: transparent; color: #f2f8ff; border-color: #ffffff73; }
+.hero .app-button.button-secondary:hover { background: #ffffff1a; }
+
+.app-field-wrapper {
+  min-height: 2.75rem;
+  background: var(--field);
+  border-color: var(--line);
+}
+.app-field-wrapper[data-focus="true"],
+.app-field-wrapper[data-open="true"] { border-color: var(--accent); }
+.app-field-label, .app-field-input { color: var(--text); }
+.app-field-label { font-weight: 600; }
+.app-field-input::placeholder { color: var(--muted); }
+.reservation-card { background: var(--surface); border: 1px solid var(--line); }
+.arrow-link:is(:hover, :focus-visible) .reservation-card { border-color: var(--accent); box-shadow: var(--shadow); }
+.lab-tag { background: var(--tint); color: var(--accent); font-weight: 650; }
+.skeleton-block { background: var(--line); }
+
+/* Adapted from the interaction patterns in https://transitions.dev/library.html. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-text { animation: text-rise 420ms cubic-bezier(.22, 1, .36, 1) both; }
+  .reveal-text-delayed { animation-delay: 80ms; }
+  .reveal-reservations { animation: content-reveal 220ms ease-out both; }
+  .skeleton-block { animation: skeleton-pulse 1.4s ease-in-out infinite alternate; }
+  .form-error { animation: error-shake 280ms cubic-bezier(.36, .07, .19, .97) both; }
+
+  .theme-icons > span {
+    transition: opacity 160ms ease, transform 220ms ease, filter 180ms ease;
+  }
+  .theme-moon, :root[data-theme="dark"] .theme-sun {
+    transform: scale(.65);
+    filter: blur(3px);
+  }
+  :root[data-theme="dark"] .theme-moon {
+    transform: scale(1);
+    filter: none;
+  }
+
+  .link-arrow { display: inline-block; transition: transform 180ms cubic-bezier(.22, 1, .36, 1); }
+  .arrow-link:is(:hover, :focus-visible) .link-arrow { transform: translateX(4px); }
+  .arrow-link:is(:hover, :focus-visible) .reservation-card .link-arrow { transform: translate(3px, -3px); }
+}
+
+@keyframes text-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes content-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes skeleton-pulse {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+
+@keyframes error-shake {
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+}
